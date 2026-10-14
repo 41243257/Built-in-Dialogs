@@ -58,6 +58,14 @@ void BuiltinDialog:: doPushBtn()
           displayTextEdit->setPalette(palette);
          }
     }
+    if(btn==errorPushBtn){
+        QErrorMessage box(this);
+        box.setWindowTitle(QStringLiteral("錯誤訊息盒"));
+        box.showMessage(QStringLiteral("訊息盒錯誤實例xx"));
+        box.showMessage(QStringLiteral("錯誤實例y"));
+        box.showMessage(QStringLiteral("錯誤zz"));
+        box.exec();
+    }
     if (btn == textPushBtn)
     {
         QPalette palette = displayTextEdit->palette();
@@ -78,6 +86,21 @@ void BuiltinDialog:: doPushBtn()
                                                                        ";;文字檔(*.txt)"
                                                                        ";;XML檔(*.xml)"));
         displayTextEdit->setText(fileName);
+    }
+    if(btn==progressPushBtn){
+        QProgressDialog progress ("正在複製檔案","取消",0,100000,this);//進度條流程
+        progress.setWindowTitle("進度對話盒展示");
+        progress.show();
+        for(int i=0;i<100000;i++){
+            progress.setValue(i);
+            qApp->processEvents();//qApp全域變數
+            if(progress.wasCanceled())
+            {
+                break;
+            }
+            qDebug() << i;
+        }
+        progress.setValue(100000);
     }
        // qDebug()<<"點擊按鈕";
     //else
